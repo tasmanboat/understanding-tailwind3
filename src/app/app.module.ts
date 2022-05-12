@@ -8,6 +8,7 @@ import { LayoutModule } from './layout/layout.module';
 import { CoreModule } from './core/core.module';
 
 import { AppComponent } from './app.component';
+// import { ReaderModule } from './reader/reader.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { AppComponent } from './app.component';
     SharedModule,
     LayoutModule,
     CoreModule,
+    // ReaderModule, // lazy load
     AppRoutingModule,
   ],
   providers: [],
