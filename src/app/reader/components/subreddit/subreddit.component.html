@@ -1,9 +1,15 @@
-<div class="p-2">
-  <form>
-    <input type="text" id="input-reddit-name" name="input-reddit-name" #inputRedditName />
-    <button type="submit" (click)="router.navigate(['..', inputRedditName.value], { relativeTo: route })">GO</button>
+<div class="">
+  <form class="py-0 bg-slate-200">
+    <input type="text" id="input-reddit-name" name="input-reddit-name" #inputRedditName class="input input-sm ml-2" />
+    <button type="submit" (click)="router.navigate(['/r', inputRedditName.value])" class="btn btn-ghost">GO</button>
   </form>
-  <div>
-    <i *ngIf="{ value: isFavSubreddit$ | async } as isFavSubredditContext" class="material-icons">{{ isFavSubredditContext.value ? 'favorite' : 'favorite_outlined' }}</i>
+  <div class="grid grid-cols-1 divide-y divide-yellow-500">
+    <div class="flex flex-row bg-slate-200">
+      <h4 class="font-serif text-lg font-bold flex-auto self-center ml-4">{{ subreddit?.name ?? 'loading ...' }}</h4>
+      <button type="button" (click)="toggleFavSubreddit()" [disabled]="lock" class="btn btn-ghost"><i *ngIf="{ value: isFavSubreddit$ | async } as isFavSubredditContext" class="material-icons">{{ isFavSubredditContext.value ? 'favorite' : 'favorite_outline' }}</i></button>
+    </div>
+    <ng-container *ngFor="let post of subreddit?.posts; trackBy: trackById; index as i">
+      <app-post-row [post]="post"></app-post-row>
+    </ng-container>
   </div>
 </div>

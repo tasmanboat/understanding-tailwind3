@@ -8,6 +8,7 @@ import { PostDetailsComponent } from './components/post-details/post-details.com
 import { SubredditComponent } from './components/subreddit/subreddit.component';
 import { FavPostsComponent } from './components/fav-posts/fav-posts.component';
 import { FavSubredditsComponent } from './components/fav-subreddits/fav-subreddits.component';
+import { PostRowComponent } from './components/post-row/post-row.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { FavSubredditsComponent } from './components/fav-subreddits/fav-subreddi
     SubredditComponent,
     FavPostsComponent,
     FavSubredditsComponent,
+    PostRowComponent,
   ],
   imports: [
     CommonModule,

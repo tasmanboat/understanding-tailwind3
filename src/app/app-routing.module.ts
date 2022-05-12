@@ -9,7 +9,7 @@ import { PeakComponent } from './shared/components/peak/peak.component';
 
 const routes: Routes = [
   {
-    path: 'rdr',
+    path: '',
     component: LayoutAppComponent,
     children: [
       { path: '', loadChildren: () => import('src/app/reader/reader.module').then(m => m.ReaderModule) },

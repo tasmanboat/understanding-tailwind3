@@ -32,6 +32,7 @@ const routes: Routes = [
 const routes: Routes = [
   { path: '', component: PostDetailsComponent, outlet: 'content' },
   { path: '', component: SubredditComponent },
+  { path: 'r/:subreddit/comments/:postId/:postTitle', component: SubredditComponent },
   { path: 'r/:subreddit', component: SubredditComponent },
   { path: 'fav/posts', component: FavPostsComponent },
   { path: 'fav/subreddits', component: FavSubredditsComponent },

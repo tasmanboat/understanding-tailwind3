@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
 import { FavSubreddit } from 'src/app/reader/interfaces/fav-subreddit';
 import { FavSubredditService } from 'src/app/reader/services/fav-subreddit.service';
 
@@ -16,7 +17,9 @@ export class HeaderComponent implements OnInit {
   }
 
 // #region records
-  favSubreddits$: Observable<FavSubreddit[]> = this.service.getRecords()
+  favSubreddits$: Observable<FavSubreddit[]> = this.service.getRecords().pipe(
+    map((favSubreddits: FavSubreddit[]) => favSubreddits.filter(r => r.isPinned))
+  )
 // #endregion
 
 // #region trackById

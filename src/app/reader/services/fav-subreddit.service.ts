@@ -30,6 +30,17 @@ export class FavSubredditService {
       map((records: FavSubreddit[]) => records.some(r => r.name === name))
     )
   }
+  getFavSubredditId(name: string): Observable<number> {
+    return this.records$.asObservable().pipe(
+      map((records: FavSubreddit[]) => {
+        let id = -1;
+        records.some(record => {
+          if (record.name === name) { id = record.id; return true } else { return false }
+        })
+        return id;
+      })
+    )
+  }
 
   updateRecord(record: FavSubreddit): Observable<any> {
     const timestamp = String(Date.now()).slice(0, -3);
@@ -39,7 +50,7 @@ export class FavSubredditService {
 
   addRecord(record: FavSubreddit): Observable<FavSubreddit> {
     const timestamp = String(Date.now()).slice(0, -3);
-    const modifiedRecord: FavSubreddit = { ...record, created_at: +timestamp, updated_at: +timestamp };
+    const modifiedRecord: FavSubreddit = { ...record, isPinned: true, created_at: +timestamp, updated_at: +timestamp };
     return this.apiService.addRecord(modifiedRecord).pipe(tap(_ => this.loadRecords()))
   }
 

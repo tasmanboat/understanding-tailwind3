@@ -1,7 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { tap, map, switchMap, first } from 'rxjs/operators';
+
+// whether a subreddit is a fav subreddit
+import { FavSubreddit } from 'src/app/reader/interfaces/fav-subreddit';
 import { FavSubredditService } from '../../services/fav-subreddit.service';
+
+// subreddit's correct name and content
+// if not found, it will get a { name: '(subreddit not found)', posts: [] } as Subreddit
+import { Subreddit } from 'src/app/reader/interfaces/subreddit';
+import { SubredditApiService } from '../../services/subreddit-api.service';
+
+import { Post } from 'src/app/reader/interfaces/post';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -18,27 +28,63 @@ export class SubredditComponent implements OnInit, OnDestroy {
     public router: Router,
     private location: Location,
     private favSubredditService: FavSubredditService,
+    private subredditApiService: SubredditApiService,
   ) { }
 
-// #region get reddit name; get reddit content (reddit name and latest posts)
-// read route param, find the correct reddit name
+// #region load a subreddit with correct name and content
+// this.subreddit (subredditApiService.getSubreddit)
+// read route params, call (subredditApiService.getSubreddit) and find the correct subreddit name + content
+// get subreddit name; get subreddit content (subreddit name and latest posts)
   ngOnInit(): void {
     this.sub = this.route.paramMap.subscribe(params => {
-      const pdReddit = params.get('subreddit') ?? 'COD';
-      // this.reddit = this.redditApiService.getReddit(pdReddit).subscribe(_ => this.reddit = _; this.redditName$.next(this.reddit.name); 额外路由修饰; )
-      console.log(pdReddit); // correct reddit name
-      this.subredditName$.next(pdReddit);
+      const pdSubreddit = params.get('subreddit') ?? 'COD';
+      // this.subreddit = this.subredditApiService.getSubreddit(pdSubreddit).subscribe(_ => this.subreddit = _; this.subredditName$.next(this.subreddit.name); 额外路由修饰; )
+      this.subredditApiService.getSubreddit(pdSubreddit).subscribe((subreddit: Subreddit) => {
+        this.subreddit = subreddit;
+        this.subredditName$.next(this.subreddit.name);
+      })
     });
   }
+  subreddit?: Subreddit;
 // #endregion
 
-// #region isFav
+// #region check whether a subreddit is a fav subreddit
+// this.subreddit.name isFav(boolean), favSubredditId(number)
   private subredditName$: BehaviorSubject<string> = new BehaviorSubject('');
   isFavSubreddit$: Observable<boolean> = this.subredditName$.pipe(
-    switchMap((reddit: string) => {
-      return this.favSubredditService.getIsFav(reddit)
+    switchMap((subreddit: string) => {
+      return this.favSubredditService.getIsFav(subreddit).pipe(tap(_=>this.lock=false)) // locking
     })
   )
+  favSubredditId$: Observable<number> = this.subredditName$.pipe(
+    switchMap((subreddit: string) => {
+      return this.favSubredditService.getFavSubredditId(subreddit)
+    })
+  )
+// #endregion
+
+// #region add to fav subreddit
+  toggleFavSubreddit() {
+    if (this.subreddit && this.subreddit.name !== '(subreddit not found)') { // a valid subreddit
+      this.lock = true; // locking
+      this.favSubredditId$.pipe(first()).subscribe((favSubredditId: number) => {
+        if (favSubredditId > -1) {
+          this.favSubredditService.deleteRecord(favSubredditId).subscribe();
+        }
+        if (favSubredditId === -1) {
+          const newFavSubreddit: FavSubreddit = { name: this.subreddit?.name } as FavSubreddit;
+          this.favSubredditService.addRecord(newFavSubreddit).subscribe();
+        }
+      });
+    }
+  }
+  lock = false;
+// #endregion
+
+// #region trackById
+  trackById(index: number, post: Post): string {
+    return post.id;
+  }
 // #endregion
 
   ngOnDestroy(): void {
