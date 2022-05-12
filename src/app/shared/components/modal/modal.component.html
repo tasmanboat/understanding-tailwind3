@@ -1,0 +1,7 @@
+<div [ngStyle]="{ display: show ? 'block' : 'none' }" id="modal" class="fixed left-0 top-0 w-full h-full z-50">
+  <div id="modal-overlay" class="bg-black absolute w-full h-full opacity-75" (click)="closeCallback()"></div>
+  <div id="modal-content" class="bg-white absolute w-fit mx-auto left-0 right-0 mt-40 rounded-2xl p-4">
+    <button title="close" (click)="closeCallback()" class="btn btn-ghost absolute right-0 top-0">✕</button>
+    <ng-content></ng-content>
+  </div>
+</div>
