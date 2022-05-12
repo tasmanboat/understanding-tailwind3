@@ -13,14 +13,14 @@ const routes: Routes = [
   { path: '', component: SubredditComponent },
   { path: '', component: PostDetailsComponent, outlet: 'content' },
   // g2
-  { path: 'r/:reddit', component: SubredditComponent },
-  { path: 'r/:reddit', component: PostDetailsComponent, outlet: 'content' },
+  { path: 'r/:subreddit', component: SubredditComponent },
+  { path: 'r/:subreddit', component: PostDetailsComponent, outlet: 'content' },
   // g3
   { path: 'fav/posts', component: FavPostsComponent },
   { path: 'fav/posts', component: PostDetailsComponent, outlet: 'content' },
   // g4
-  { path: 'fav/reddits', component: FavSubredditsComponent },
-  { path: 'fav/reddits', component: undefined, outlet: 'content' },
+  { path: 'fav/subreddits', component: FavSubredditsComponent },
+  { path: 'fav/subreddits', component: undefined, outlet: 'content' },
 
   // patch the outlet (for the layout)
   // { path: '', component: PostDetailsComponent, outlet: 'content' },
@@ -32,9 +32,9 @@ const routes: Routes = [
 const routes: Routes = [
   { path: '', component: PostDetailsComponent, outlet: 'content' },
   { path: '', component: SubredditComponent },
-  { path: 'r/:reddit', component: SubredditComponent },
+  { path: 'r/:subreddit', component: SubredditComponent },
   { path: 'fav/posts', component: FavPostsComponent },
-  { path: 'fav/reddits', component: FavSubredditsComponent },
+  { path: 'fav/subreddits', component: FavSubredditsComponent },
 ];
 // #endregion
 

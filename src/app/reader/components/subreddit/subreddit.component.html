@@ -1,1 +1,9 @@
-<p>subreddit works!</p>
+<div class="p-2">
+  <form>
+    <input type="text" id="input-reddit-name" name="input-reddit-name" #inputRedditName />
+    <button type="submit" (click)="router.navigate(['..', inputRedditName.value], { relativeTo: route })">GO</button>
+  </form>
+  <div>
+    <i *ngIf="{ value: isFavSubreddit$ | async } as isFavSubredditContext" class="material-icons">{{ isFavSubredditContext.value ? 'favorite' : 'favorite_outlined' }}</i>
+  </div>
+</div>

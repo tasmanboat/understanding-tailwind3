@@ -1,1 +1,7 @@
-<p>fav-subreddits works!</p>
+<ng-container *ngIf="favSubreddits$ | async as favSubreddits">
+  <ul>
+    <li *ngFor="let favSubreddit of favSubreddits; trackBy: trackById; index as i">
+      <a [routerLink]="['../..', 'r', favSubreddit.name]" class="link">r/{{ favSubreddit.name }}</a>
+    </li>
+  </ul>
+</ng-container>

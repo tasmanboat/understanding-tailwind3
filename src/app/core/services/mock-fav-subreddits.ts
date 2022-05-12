@@ -1,4 +1,4 @@
-import { FavSubreddit } from "src/app/reader/interfaces/fav-subreddit";
+import { FavSubreddit } from 'src/app/reader/interfaces/fav-subreddit';
 
 export const FAV_SUBREDDITS: FavSubreddit[] = [
   { id: 1, name: 'COD', created_at: 1651794310, updated_at: 1651794310 },

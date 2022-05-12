@@ -26,7 +26,7 @@ export class LayoutAppComponent implements OnInit, OnDestroy {
       // tap(_ => console.log(_)),
     ).subscribe((event: NavigationEnd) => {
       console.log(`(LayoutAppComponent) ` + event.url);
-      this.showContent = event.url.endsWith('fav/reddits') ? false : true;
+      this.showContent = event.url.endsWith('fav/subreddits') ? false : true;
     })
   }
 // #endregion
