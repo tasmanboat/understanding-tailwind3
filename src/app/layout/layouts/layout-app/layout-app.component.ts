@@ -21,6 +21,7 @@ export class LayoutAppComponent implements OnInit, OnDestroy {
 // #region hide 'content' named outlet for 'fav/reddits' path
   showContent: boolean = true;
   ngOnInit(): void {
+    this.showContent = this.router.url.endsWith('fav/subreddits') ? false : true;
     this.sub = this.router.events.pipe(
       filter((event: any): event is NavigationEnd => event instanceof NavigationEnd),
       // tap(_ => console.log(_)),
