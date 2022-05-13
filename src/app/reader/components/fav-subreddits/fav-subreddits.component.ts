@@ -17,7 +17,29 @@ export class FavSubredditsComponent implements OnInit {
   }
 
 // #region records
-  favSubreddits$: Observable<FavSubreddit[]> = this.service.getRecords()
+  favSubreddits$: Observable<FavSubreddit[]> = this.service.getRecords().pipe(tap(_=>{
+    console.log(_);
+  }))
+// #endregion
+
+// #region update a record (toggle)
+  onToggle(e: any, favSubreddit: FavSubreddit) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (favSubreddit.isPinned !== e.target.checked) {
+      const _record = {...favSubreddit};
+      _record.isPinned = e.target.checked;
+      this.service.updateRecord(_record).subscribe();
+    }
+  }
+// #endregion
+
+// #region delete a record
+  onDelete(e: any, favSubreddit: FavSubreddit) {
+    e.preventDefault();
+    e.stopPropagation();
+    this.service.deleteRecord(favSubreddit.id).subscribe();
+  }
 // #endregion
 
 // #region trackById

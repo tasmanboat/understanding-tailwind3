@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { InMemoryDbService, ResponseOptions } from 'angular-in-memory-web-api';
 import { FavSubreddit } from "src/app/reader/interfaces/fav-subreddit";
 import { FAV_SUBREDDITS } from './mock-fav-subreddits';
+import { FavPost } from "src/app/reader/interfaces/fav-post";
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +20,11 @@ PUT /api/fav-subreddits/1
 DELETE /api/fav-subreddits/1
 */
   createDb() {
-    return { 'fav-subreddits': FAV_SUBREDDITS };
+    return { 'fav-subreddits': FAV_SUBREDDITS, 'fav-posts': [] };
   }
 // #endregion
 
-  genId(records: FavSubreddit[]): number {
+  genId<T extends FavSubreddit | FavPost>(records: T[]): number {
     return records.length > 0 ? Math.max(...records.map(record => record.id))+1 : 11;
   }
 

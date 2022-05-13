@@ -39,10 +39,12 @@ export class SubredditComponent implements OnInit, OnDestroy {
     this.sub = this.route.paramMap.subscribe(params => {
       const pdSubreddit = params.get('subreddit') ?? 'COD';
       // this.subreddit = this.subredditApiService.getSubreddit(pdSubreddit).subscribe(_ => this.subreddit = _; this.subredditName$.next(this.subreddit.name); 额外路由修饰; )
-      this.subredditApiService.getSubreddit(pdSubreddit).subscribe((subreddit: Subreddit) => {
-        this.subreddit = subreddit;
-        this.subredditName$.next(this.subreddit.name);
-      })
+      if (pdSubreddit) {
+        this.subredditApiService.getSubreddit(pdSubreddit).subscribe((subreddit: Subreddit) => {
+          this.subreddit = subreddit;
+          this.subredditName$.next(this.subreddit.name);
+        })
+      }
     });
   }
   subreddit?: Subreddit;
@@ -78,7 +80,7 @@ export class SubredditComponent implements OnInit, OnDestroy {
       });
     }
   }
-  lock = false;
+  lock: boolean = false;
 // #endregion
 
 // #region trackById

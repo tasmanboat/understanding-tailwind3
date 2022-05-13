@@ -1,7 +1,22 @@
-<ng-container *ngIf="favSubreddits$ | async as favSubreddits">
-  <ul>
-    <li *ngFor="let favSubreddit of favSubreddits; trackBy: trackById; index as i">
-      <a [routerLink]="['../..', 'r', favSubreddit.name]" class="link">r/{{ favSubreddit.name }}</a>
-    </li>
-  </ul>
-</ng-container>
+<div *ngIf="favSubreddits$ | async as favSubreddits" class="p-2 bg-slate-400">
+  <table class="table table-fixed">
+    <!-- head -->
+    <thead>
+      <tr>
+        <th class="w-8 text-center">#</th>
+        <th class="w-60">name</th>
+        <th class="w-20">isPinned</th>
+        <th class="w-8"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- rows -->
+      <tr *ngFor="let favSubreddit of favSubreddits; index as i" class="hover">
+        <td class="text-center">{{ favSubreddit.id }}</td>
+        <td><a [routerLink]="['../..', 'r', favSubreddit.name]" class="link">r/{{ favSubreddit.name }}</a></td>
+        <td><input type="checkbox" [checked]="favSubreddit.isPinned" (change)="onToggle($event, favSubreddit)" class="toggle toggle-sm" /></td>
+        <td><button (click)="onDelete($event, favSubreddit)" class="">✕</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
