@@ -1,0 +1,10 @@
+<div class="flex flex-row p-4">
+  <div class="shrink-0 w-14 min-w-fit text-center">{{ reply.ups }}</div>
+  <div class="flex-auto flex flex-col">
+    <div class="" [innerHTML]="reply.body | markdown"></div>
+    <div class="flex flex-row mt-4">
+      <div class="shrink-0 min-w-fit">{{ reply.author }} <span *ngIf="isOP" class="font-bold">(OP)</span></div>
+      <div class="flex-auto mx-4">{{ reply.created+'000' | dateAgo }}</div>
+    </div>
+  </div>
+</div>
