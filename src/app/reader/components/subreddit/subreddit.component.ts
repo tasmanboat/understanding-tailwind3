@@ -37,17 +37,19 @@ export class SubredditComponent implements OnInit, OnDestroy {
 // get subreddit name; get subreddit content (subreddit name and latest posts)
   ngOnInit(): void {
     this.sub = this.route.paramMap.subscribe(params => {
-      const pdSubreddit = params.get('subreddit') ?? 'COD';
+      const pdSubreddit = params.get('subreddit') ?? HOME_SUBREDDIT;
       // this.subreddit = this.subredditApiService.getSubreddit(pdSubreddit).subscribe(_ => this.subreddit = _; this.subredditName$.next(this.subreddit.name); 额外路由修饰; )
-      if (pdSubreddit) {
+      if (pdSubreddit !== this.cacheRoute.subreddit) {
         this.subredditApiService.getSubreddit(pdSubreddit).subscribe((subreddit: Subreddit) => {
           this.subreddit = subreddit;
           this.subredditName$.next(this.subreddit.name);
+          this.cacheRoute.subreddit = this.subreddit.name;
         })
       }
     });
   }
   subreddit?: Subreddit;
+  cacheRoute = { subreddit: '' };
 // #endregion
 
 // #region check whether a subreddit is a fav subreddit
@@ -95,3 +97,5 @@ export class SubredditComponent implements OnInit, OnDestroy {
   sub?: Subscription;
 
 }
+
+const HOME_SUBREDDIT = 'COD';

@@ -13,7 +13,7 @@ export class MarkdownPipe implements PipeTransform {
     renderer.link = (href, title, text) => {
       const localLink = href?.startsWith(`${location.protocol}//${location.hostname}`);
       const html = linkRenderer.call(renderer, href, title, text);
-      return localLink ? html : html.replace(/^<a /, `<a target="_blank" rel="noreferrer noopener nofollow" `);
+      return localLink ? html : html.replace(/^<a /, `<a target="_blank" class="link" rel="noreferrer noopener nofollow" `);
     };
     if (value?.length > 0) {
       return marked(value, { renderer: renderer });
