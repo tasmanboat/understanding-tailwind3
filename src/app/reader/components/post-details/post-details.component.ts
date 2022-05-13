@@ -26,10 +26,12 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
   ) { }
 
 // #region post: load a post with content
-// getPost(subredditName, postId)
+// loadPost(subredditName, postId)
+// when? this.route.paramMap subscribe /comments/
   ngOnInit(): void {
-    this.getPost(this.router.url);
+    this.loadPost(this.router.url);
     this.page = Number(this.route.snapshot.queryParamMap.get('rpn') ?? '1');
+    // effect effects
     // effect1: to read the query param on any page
     // effect2: to add the query param to the first page
     /*
@@ -52,16 +54,19 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
     })
     */
   }
-  getPost(url: string) {
+  loadPost(url: string) {
     // console.log('(PostDetailsComponent) ' + url);
     let params: string[] = url.split('/');
-    let subredditName: string = params[2];
-    let postId: string = params[4];
-    if (subredditName && postId) {
-      // load a post
-      this.postApiService.getPost(subredditName, postId).subscribe((post: Post) => {
-        this.post = post;
-      })
+    if (params[3] === 'comments') {
+      console.log(`(PostDetailsComponent) loadPost`)
+      let subredditName: string = params[2];
+      let postId: string = params[4];
+      if (subredditName && postId) {
+        // load a post
+        this.postApiService.getPost(subredditName, postId).subscribe((post: Post) => {
+          this.post = post;
+        })
+      }
     }
   }
   post?: Post
@@ -74,7 +79,7 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
     // tap(_ => console.log(_)),
   ).subscribe((event: NavigationEnd) => {
     console.log('event.url: ' + event.url); // this.route.paramMap could be parsed from event.url
-    this.getPost(event.url);
+    this.loadPost(event.url);
     if (event.url.includes('/comments/')) { this.page = 1 }
   });
 
@@ -94,7 +99,7 @@ write page number into route param
     if (this.router.url.includes('/comments/')) {
       let url = this.router.url.includes('?') ? this.router.url.split('?')[0] : this.router.url;
       this.location.replaceState(`${url}?rpn=${this.page}`);
-      console.log(`(PostDetailsComponent) (set page)` + url);
+      // console.log(`(PostDetailsComponent) (set page)` + url);
     }
   }
   get page(): number { return this._page }
