@@ -31,6 +31,28 @@ export class SubredditComponent implements OnInit, OnDestroy {
     private subredditApiService: SubredditApiService,
   ) { }
 
+// #region load a subreddit on search
+
+  onSearch(redditName: string) {
+    if (redditName !== this.cacheRoute.subreddit) {
+      this.loadSubreddit(redditName)
+    }
+  }
+
+  private loadSubreddit(redditName: string) {
+    this.subredditApiService.getSubreddit(redditName).subscribe((subreddit: Subreddit) => {
+      this.subreddit = subreddit;
+      this.subredditName$.next(this.subreddit.name);
+      this.cacheRoute = {...this.cacheRoute, subreddit: this.subreddit.name }; // update cacheRoute
+      if (!this.router.url.includes('/comments/')) {
+        // this.location.replaceState(`/r/${this.subreddit.name}`);
+        this.router.navigate(['r', this.subreddit.name]);
+      }
+    })
+  }
+
+// #endregion
+
 // #region load a subreddit with correct name and content
 // this.subreddit (subredditApiService.getSubreddit)
 // read route params, call (subredditApiService.getSubreddit) and find the correct subreddit name + content
@@ -40,11 +62,7 @@ export class SubredditComponent implements OnInit, OnDestroy {
       const pdSubreddit = params.get('subreddit') ?? HOME_SUBREDDIT;
       // this.subreddit = this.subredditApiService.getSubreddit(pdSubreddit).subscribe(_ => this.subreddit = _; this.subredditName$.next(this.subreddit.name); 额外路由修饰; )
       if (pdSubreddit !== this.cacheRoute.subreddit) {
-        this.subredditApiService.getSubreddit(pdSubreddit).subscribe((subreddit: Subreddit) => {
-          this.subreddit = subreddit;
-          this.subredditName$.next(this.subreddit.name);
-          this.cacheRoute.subreddit = this.subreddit.name;
-        })
+        this.loadSubreddit(pdSubreddit)
       }
     });
   }

@@ -1,7 +1,7 @@
 <div class="">
-  <form class="py-0 bg-slate-200">
-    <input type="text" id="input-reddit-name" name="input-reddit-name" #inputRedditName class="input input-sm ml-2" />
-    <button type="submit" (click)="router.navigate(['/r', inputRedditName.value])" class="btn btn-ghost">GO</button>
+  <form class="flex items-center py-0 bg-slate-200">
+    <input type="text" id="input-reddit-name" name="input-reddit-name" #inputRedditName class="input input-sm ml-2 flex-auto" />
+    <button type="submit" (click)="onSearch(inputRedditName.value)" class="btn btn-ghost">GO</button>
   </form>
   <div class="grid grid-cols-1 divide-y divide-yellow-500">
     <div class="flex flex-row bg-slate-200">
