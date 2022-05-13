@@ -61,7 +61,7 @@ export class SubredditComponent implements OnInit, OnDestroy {
     this.sub = this.route.paramMap.subscribe(params => {
       const pdSubreddit = params.get('subreddit') ?? HOME_SUBREDDIT;
       // this.subreddit = this.subredditApiService.getSubreddit(pdSubreddit).subscribe(_ => this.subreddit = _; this.subredditName$.next(this.subreddit.name); 额外路由修饰; )
-      if (pdSubreddit !== this.cacheRoute.subreddit) {
+      if (pdSubreddit) { // where magic happens
         this.loadSubreddit(pdSubreddit)
       }
     });
