@@ -8,7 +8,7 @@
       <a [routerLink]="['about']"><i class="material-icons">info_outline</i></a>
     </div>
     <ng-container *ngIf="showContent; else notShowContent">
-      <div class="shrink-0 w-64 bg-blue-500"><router-outlet></router-outlet></div>
+      <div class="shrink-0 w-96 bg-blue-500"><router-outlet></router-outlet></div>
       <div class="flex-auto bg-blue-700"><router-outlet name="content"></router-outlet></div>
     </ng-container>
   </div>
