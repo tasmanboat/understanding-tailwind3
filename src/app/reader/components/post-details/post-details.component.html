@@ -7,12 +7,15 @@
 
       <p><a [routerLink]="['r', post.subreddit]">r/{{ post.subreddit }}</a></p>
       <p>{{ post.author }} {{ post.created+'000' | date: 'medium' }}</p>
-      <h4 id="post-title" class="text-lg font-bold my-4">{{ post.title | decodeHTMLEntities }}</h4>
+      <div class="flex flex-row items-center">
+        <h4 id="post-title" class="text-lg font-bold my-4">{{ post.title | decodeHTMLEntities }}</h4>
+        <button class="btn btn-ghost"><i class="material-icons">bookmark_outline</i></button>
+      </div>
 
       <div id="post-content" class="">
         <div *ngIf="post.selftext" [innerHTML]="post.selftext | markdown"></div>
         <p *ngIf="post.url && !isPic(post.url) && shouldShowUrl(post)"><a [href]="post.url" target="_blank" [innerHTML]="post.url | decodeHTMLEntities" class="link"></a></p>
-        <div *ngIf="post.url && isPic(post.url)"><img [src]="post.url" alt="post.url" style="max-width: 15em" /></div>
+        <div *ngIf="post.url && isPic(post.url)"><img [src]="post.url" alt="post.url" style="max-width: 40em" /></div>
       </div>
 
       <div id="post-permanlink" class="my-4">
