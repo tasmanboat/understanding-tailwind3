@@ -9,7 +9,8 @@
       <p>{{ post.author }}<span class="mx-4">{{ post.created+'000' | date: 'medium' }}</span></p>
       <div class="flex flex-row items-center">
         <h4 id="post-title" class="text-lg font-bold my-4">{{ post.title | decodeHTMLEntities }}</h4>
-        <button class="btn btn-ghost"><i class="material-icons">bookmark_outline</i></button>
+        <!-- <button class="btn btn-ghost"><i class="material-icons">bookmark_outline</i></button> -->
+        <app-fav-post-button [post]="post"></app-fav-post-button>
       </div>
 
       <div id="post-content" class="">
