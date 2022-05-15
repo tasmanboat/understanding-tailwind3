@@ -50,7 +50,7 @@ export class FavSubredditService {
 
   addRecord(record: FavSubreddit): Observable<FavSubreddit> {
     const timestamp = String(Date.now()).slice(0, -3);
-    const modifiedRecord: FavSubreddit = { ...record, isPinned: true, created_at: +timestamp, updated_at: +timestamp };
+    const modifiedRecord: FavSubreddit = { ...record, isPinned: true, created_at: +timestamp, updated_at: -1 };
     return this.apiService.addRecord(modifiedRecord).pipe(tap(_ => this.loadRecords()))
   }
 
