@@ -6,7 +6,7 @@
     <div class="flex-auto">
 
       <p><a [routerLink]="['r', post.subreddit]">r/{{ post.subreddit }}</a></p>
-      <p>{{ post.author }} {{ post.created+'000' | date: 'medium' }}</p>
+      <p>{{ post.author }}<span class="mx-4">{{ post.created+'000' | date: 'medium' }}</span></p>
       <div class="flex flex-row items-center">
         <h4 id="post-title" class="text-lg font-bold my-4">{{ post.title | decodeHTMLEntities }}</h4>
         <button class="btn btn-ghost"><i class="material-icons">bookmark_outline</i></button>

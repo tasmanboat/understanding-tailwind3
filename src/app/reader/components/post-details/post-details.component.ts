@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, BehaviorSubject, Subscription } from 'rxjs';
-import { tap, filter } from 'rxjs/operators';
+import { Observable, BehaviorSubject, Subscription, of } from 'rxjs';
+import { tap, filter, switchMap } from 'rxjs/operators';
 
 import { Subreddit } from 'src/app/reader/interfaces/subreddit';
 import { Post } from 'src/app/reader/interfaces/post';
@@ -10,6 +10,15 @@ import { PostApiService } from 'src/app/reader/services/post-api.service';
 
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Location } from '@angular/common';
+
+/*
+timeline
+read this.router.url -> load post -> post loaded -> update url (the correct url + replies page number)
+read this.router.url -> load post and replies on some page -> post and replies loaded -> update url (the correct url + replies page number)
+
+read this.router.url -> load post and all replies -> post and replies loaded -> arrange replies / (page setter) update url
+
+*/
 
 @Component({
   selector: 'app-post-details',
@@ -29,8 +38,10 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
 // loadPost(subredditName, postId)
 // when? this.route.paramMap subscribe /comments/
   ngOnInit(): void {
-    this.loadPost(this.router.url);
-    this.page = Number(this.route.snapshot.queryParamMap.get('rpn') ?? '1');
+    this.loadPost(this.router.url).subscribe((post: Post) => {
+      this.post = post;
+      this.page = Number(this.route.snapshot.queryParamMap.get('rpn') ?? '1');
+    })
     // effect effects
     // effect1: to read the query param on any page
     // effect2: to add the query param to the first page
@@ -54,20 +65,20 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
     })
     */
   }
-  loadPost(url: string) {
-    // console.log('(PostDetailsComponent) ' + url);
+
+  private loadPost(url: string): Observable<Post> {
+    console.log('(PostDetailsComponent) loadPost from ' + url);
     let params: string[] = url.split('/');
-    if (params[3] === 'comments') {
-      console.log(`(PostDetailsComponent) loadPost`)
-      let subredditName: string = params[2];
-      let postId: string = params[4];
-      if (subredditName && postId) {
-        // load a post
-        this.postApiService.getPost(subredditName, postId).subscribe((post: Post) => {
-          this.post = post;
+    let subredditName: string = params[2];
+    let postId: string = params[4];
+    if (params[3] === 'comments' && subredditName && postId) {
+      return this.postApiService.getPost(subredditName, postId).pipe(
+        tap((post: Post) => {
+          console.log(`(PostDetailsComponent) loadPost done`);
         })
-      }
+      )
     }
+    return of({ title: '(post not found)' } as Post)
   }
   post?: Post
 
@@ -79,28 +90,27 @@ export class PostDetailsComponent implements OnInit, OnDestroy {
     // tap(_ => console.log(_)),
   ).subscribe((event: NavigationEnd) => {
     console.log('event.url: ' + event.url); // this.route.paramMap could be parsed from event.url
-    this.loadPost(event.url);
-    if (event.url.includes('/comments/')) { this.page = 1 }
+    if (event.url.includes('/comments/')) {
+      this.loadPost(event.url).subscribe((post: Post) => {
+        // for a post page, according to post.permalink, get current url without params, then add the current page param
+        this.post = post;
+        this.page = Number(this.route.snapshot.queryParamMap.get('rpn') ?? '1');
+      })
+    }
   });
 
 // #endregion
 
-// #region replies: pagination
+// #region replies: pagination and url modification
 /*
-write page number into route param
+write post.permalink and page number into route param
 */
   // page: number = 1;
   set page(page: number) {
     this._page = page;
     // this.router.navigate(["."], { relativeTo: this.route, queryParams: { rpn: this.page }});
     // console.log(this.router.url);
-
-    // for a post page, get current url without params, then add the current page param
-    if (this.router.url.includes('/comments/')) {
-      let url = this.router.url.includes('?') ? this.router.url.split('?')[0] : this.router.url;
-      this.location.replaceState(`${url}?rpn=${this.page}`);
-      // console.log(`(PostDetailsComponent) (set page)` + url);
-    }
+    if (this?.post?.permalink) { this.location.replaceState(`${this.post.permalink}?rpn=${this._page}`); }
   }
   get page(): number { return this._page }
   private _page: number = 1;
