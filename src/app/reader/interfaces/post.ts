@@ -5,7 +5,7 @@ export interface Post {
   author?: string;
   title: string;
   selftext?: string;
-  permalink?: string;
+  permalink: string;
   created?: number;
   score?: number;
   url?: string;

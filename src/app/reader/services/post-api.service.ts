@@ -30,7 +30,7 @@ export class PostApiService {
       catchError(error => {
         // throw new Error(error)
         console.error('(PostApiService) post not found');
-        return of({ title: '(post not found)', replies: [], subreddit: '', id: '' } as Post);
+        return of({ title: '(post not found)', replies: [], subreddit: '', id: '', permalink: '' } as Post);
       })
     )
   }
