@@ -3,6 +3,7 @@ import { InMemoryDbService, ResponseOptions } from 'angular-in-memory-web-api';
 import { FavSubreddit } from "src/app/reader/interfaces/fav-subreddit";
 import { FAV_SUBREDDITS } from './mock-fav-subreddits';
 import { FavPost } from "src/app/reader/interfaces/fav-post";
+import { FAV_POSTS } from './mock-fav-posts';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ PUT /api/fav-subreddits/1
 DELETE /api/fav-subreddits/1
 */
   createDb() {
-    return { 'fav-subreddits': FAV_SUBREDDITS, 'fav-posts': [] };
+    return { 'fav-subreddits': FAV_SUBREDDITS, 'fav-posts': FAV_POSTS };
   }
 // #endregion
 
