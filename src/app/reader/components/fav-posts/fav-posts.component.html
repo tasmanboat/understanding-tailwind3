@@ -1,1 +1,24 @@
-<p>fav-posts works!</p>
+<div>
+  <form class="flex items-center py-0 bg-slate-200">
+    <input type="text" id="input-reddit-name" name="input-reddit-name" (input)="search(inputPostTitle.value)" #inputPostTitle class="input input-sm ml-2 flex-auto" />
+    <button type="submit" (click)="search(inputPostTitle.value)" class="btn btn-ghost">Search</button>
+  </form>
+
+  <h4 class="pl-4 pt-2 h-12 font-serif text-lg font-bold bg-slate-200">bookmarks</h4>
+  <ng-container *ngIf="favPosts$ | async as favPosts">
+    <div class="grid grid-cols-1 divide-y divide-yellow-500">
+      <div></div>
+      <ng-container *ngFor="let post of favPosts; trackBy: trackById; index as i">
+
+        <div class="flex flex-row bg-slate-100 px-4 py-4">
+          <div id="content">
+            <h4 class="font-serif text-lg">
+              <a (click)="handleClick(post)" class="link">{{ post.title | decodeHTMLEntities }}</a>
+            </h4>
+          </div>
+        </div>
+
+      </ng-container>
+    </div>
+  </ng-container>
+</div>
