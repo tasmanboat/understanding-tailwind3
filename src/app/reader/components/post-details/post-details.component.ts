@@ -110,7 +110,14 @@ write post.permalink and page number into route param
     this._page = page;
     // this.router.navigate(["."], { relativeTo: this.route, queryParams: { rpn: this.page }});
     // console.log(this.router.url);
-    if (this?.post?.permalink) { this.location.replaceState(`${this.post.permalink}?rpn=${this._page}`); }
+    if (this?.post?.permalink) {
+      const fromFav = this.route.snapshot.queryParamMap.get('fromFav');
+      if (fromFav) {
+        this.location.replaceState(`${this.post.permalink}?rpn=${this._page}&fromFav=${fromFav}`);
+      } else {
+        this.location.replaceState(`${this.post.permalink}?rpn=${this._page}`);
+      }
+    }
   }
   get page(): number { return this._page }
   private _page: number = 1;

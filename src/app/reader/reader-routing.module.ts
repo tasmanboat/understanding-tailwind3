@@ -40,7 +40,44 @@ const subredditMatcher = (segments: UrlSegment[]): UrlMatchResult => {
       }
     }
   }
-  if (segments.length === 5 && segments[0].path === 'r' && segments[2].path === 'comments') {
+  if (segments.length === 5 && segments[0].path === 'r' && segments[2].path === 'comments')
+  {
+    return {
+      consumed: segments,
+      posParams: {
+        subreddit: segments[1],
+        postId: segments[3],
+        postTitle: segments[4],
+      }
+    }
+  }
+  return <UrlMatchResult>(null as any);
+}
+
+// a "trailing slash" url is parsed by favPostsMatcher
+const favPostsMatcher = (segments: UrlSegment[]): UrlMatchResult => {
+  // http://localhost:4200/r/AMA/comments/uq094o/i_just_stayed_up_past_my_bedtime_watching_a_movie?rpn=1
+  if (segments.length === 2 && segments[0].path === 'fav' && segments[1].path === 'posts') {
+    return {
+      consumed: segments,
+      posParams: {
+      }
+    }
+  }
+  // query params cannot be read here. but for differentiation of a fav/posts post and an r/AMA post,
+  // the "trailing slash" strategy is used here.
+  // the parsed post url should have a trailing slash. special path setting in fav-posts.component.html
+  if (segments.length === 6 && segments[0].path === 'r' && segments[2].path === 'comments') {
+    return {
+      consumed: segments,
+      posParams: {
+        subreddit: segments[1],
+        postId: segments[3],
+        postTitle: segments[4],
+      }
+    }
+  }
+  if (segments.length === 6 && segments[0].path === 'r' && segments[2].path === 'comments') {
     return {
       consumed: segments,
       posParams: {
@@ -60,6 +97,8 @@ const routes: Routes = [
   { path: '', component: SubredditComponent },
   // { path: 'r/:subreddit/comments/:postId/:postTitle', component: SubredditComponent },
   // { path: 'r/:subreddit', component: SubredditComponent },
+  // { path: 'r/:subreddit', component: SubredditComponent },
+  { matcher: favPostsMatcher, component: FavPostsComponent },
   { matcher: subredditMatcher, component: SubredditComponent },
   { path: 'fav/posts', component: FavPostsComponent },
   { path: 'fav/subreddits', component: FavSubredditsComponent },
