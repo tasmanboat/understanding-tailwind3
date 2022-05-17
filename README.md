@@ -1,6 +1,22 @@
 # App41
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.1.
+```
+tailwind + daisyui
+npm install -D tailwindcss postcss autoprefixer daisyui
+npx tailwindcss init
+update in tailwind.config.js and styles.scss
+
+markdown
+npm install marked
+npm install -D @types/marked
+
+ngx-pagination
+npm install ngx-pagination
+
+MOCK SERVER
+npm install -D angular-in-memory-web-api
+```
 
 ## Development server
 

@@ -10,6 +10,7 @@ import { FavPostsComponent } from './components/fav-posts/fav-posts.component';
 import { FavSubredditsComponent } from './components/fav-subreddits/fav-subreddits.component';
 import { PostRowComponent } from './components/post-row/post-row.component';
 import { ReplyRowComponent } from './components/reply-row/reply-row.component';
+import { FavPostButtonComponent } from './components/fav-post-button/fav-post-button.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ReplyRowComponent } from './components/reply-row/reply-row.component';
     FavSubredditsComponent,
     PostRowComponent,
     ReplyRowComponent,
+    FavPostButtonComponent,
   ],
   imports: [
     CommonModule,
