@@ -44,15 +44,26 @@ export class FavPostsComponent implements OnInit {
               // for every record title, check if the title contains substring (every item in arrTerm acts the substring)
               let title = record.title.toLowerCase();
               let containsAll = arrTerm?.every(i => title.includes(i));
-              return containsAll;
+              // return containsAll;
+              let subreddit = record.subreddit.toLowerCase();
+              let matchesSubreddit = arrTerm?.some(i => subreddit.includes(i));
+              return containsAll || matchesSubreddit;
             })
           } else {
             return records;
+          }
+        }),
+        tap((records: FavPost[]) => {
+          if (term?.trim()) {
+            this.title = `search results (${records.length})`
+          } else {
+            this.title = `bookmarks (${records.length})`
           }
         })
       )
     })
   );
+  title = '';
 // #endregion
 
 // #region delete a record
