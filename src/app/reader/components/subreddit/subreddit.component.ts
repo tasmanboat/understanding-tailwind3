@@ -46,7 +46,7 @@ export class SubredditComponent implements OnInit, OnDestroy {
       this.cacheRoute = {...this.cacheRoute, subreddit: this.subreddit.name }; // update cacheRoute
       if (!this.router.url.includes('/comments/')) {
         // this.location.replaceState(`/r/${this.subreddit.name}`);
-        this.router.navigate(['r', this.subreddit.name]);
+        // this.router.navigate(['r', this.subreddit.name]);
       }
     })
   }
