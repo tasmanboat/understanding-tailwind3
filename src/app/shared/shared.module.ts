@@ -14,6 +14,8 @@ import { PeakComponent } from './components/peak/peak.component';
 import { ModalComponent } from './components/modal/modal.component';
 
 import { NgxPaginationModule } from 'ngx-pagination';
+import { PersistentStorageExportDirective } from './directives/persistent-storage-export.directive';
+import { PersistentStorageImportDirective } from './directives/persistent-storage-import.directive';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     PageNotFoundComponent,
     PeakComponent,
     ModalComponent,
+    PersistentStorageExportDirective,
+    PersistentStorageImportDirective,
   ],
   imports: [
     CommonModule,
@@ -38,6 +42,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     PageNotFoundComponent,
     PeakComponent,
     ModalComponent,
+    PersistentStorageImportDirective,
+    PersistentStorageExportDirective,
   ],
 })
 export class SharedModule { }
