@@ -1,23 +1,25 @@
-<div *ngIf="favSubreddits$ | async as favSubreddits" class="p-2 bg-suzumecha-extra-light">
-  <h4 class="text-2xl my-4">subreddit settings</h4>
-  <table class="table table-fixed">
-    <!-- head -->
-    <thead>
-      <tr>
-        <th class="w-8 text-center">#</th>
-        <th class="w-60">name</th>
-        <th class="w-20">isPinned</th>
-        <th class="w-8"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- rows -->
-      <tr *ngFor="let favSubreddit of favSubreddits; index as i" class="hover">
-        <td class="text-center">{{ favSubreddit.id }}</td>
-        <td><a [routerLink]="['../..', 'r', favSubreddit.name]" class="link">r/{{ favSubreddit.name }}</a></td>
-        <td><input type="checkbox" [checked]="favSubreddit.isPinned" (change)="onToggle($event, favSubreddit)" class="toggle toggle-sm" /></td>
-        <td><button (click)="onDelete($event, favSubreddit)" class="">✕</button></td>
-      </tr>
-    </tbody>
-  </table>
+<div *ngIf="favSubreddits$ | async as favSubreddits" class="min-h-full bg-suzumecha-extra-light flex flex-row justify-center">
+  <div>
+    <h4 class="text-2xl my-4">fav subreddits</h4>
+    <table class="table table-fixed">
+      <!-- head -->
+      <thead>
+        <tr>
+          <th class="w-8 text-center">#</th>
+          <th class="w-60">name</th>
+          <th class="w-20">isPinned</th>
+          <th class="w-8"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- rows -->
+        <tr *ngFor="let favSubreddit of favSubreddits; index as i" class="hover">
+          <td class="text-center">{{ favSubreddit.id }}</td>
+          <td><a [routerLink]="['../..', 'r', favSubreddit.name]" class="link">r/{{ favSubreddit.name }}</a></td>
+          <td><input type="checkbox" [checked]="favSubreddit.isPinned" (change)="onToggle($event, favSubreddit)" class="toggle toggle-sm" /></td>
+          <td><button (click)="onDelete($event, favSubreddit)" class="">✕</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
