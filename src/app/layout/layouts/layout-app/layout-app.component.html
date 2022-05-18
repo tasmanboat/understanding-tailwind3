@@ -5,7 +5,8 @@
       <a [routerLink]="['.']"><i class="material-icons hover:text-suzumecha-extra-light">home</i></a>
       <a [routerLink]="['fav', 'subreddits']"><i class="material-icons hover:text-suzumecha-extra-light">collections_bookmark</i></a>
       <a [routerLink]="['fav', 'posts']"><i class="material-icons hover:text-suzumecha-extra-light">library_books</i></a>
-      <a [routerLink]="['about']"><i class="material-icons hover:text-suzumecha-extra-light">info_outline</i></a>
+      <!-- <a [routerLink]="['about']"><i class="material-icons hover:text-suzumecha-extra-light">info_outline</i></a> -->
+      <app-dropdown></app-dropdown>
     </div>
     <ng-container *ngIf="showContent; else notShowContent">
       <div class="shrink-0 w-96 bg-suzumecha-light"><router-outlet></router-outlet></div>

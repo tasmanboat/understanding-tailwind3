@@ -8,6 +8,7 @@ import { LayoutAppComponent } from './layouts/layout-app/layout-app.component';
 import { LayoutDefaultComponent } from './layouts/layout-default/layout-default.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { DropdownComponent } from './components/dropdown/dropdown.component';
 // import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 
@@ -18,6 +19,7 @@ import { FooterComponent } from './components/footer/footer.component';
     LayoutDefaultComponent,
     HeaderComponent,
     FooterComponent,
+    DropdownComponent,
     // SidebarComponent,
   ],
   imports: [

@@ -7,4 +7,9 @@
   width: 1280px;
   background-color: rgb(226, 219, 219);
   // border: solid 2px red;
+
+  // sticky footer
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
