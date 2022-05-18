@@ -8,4 +8,5 @@ export const FAV_SUBREDDITS: FavSubreddit[] = [
   { id: 5, name: 'MkeBucks', isPinned: true, created_at: 1651975061, updated_at: -1 },
   { id: 6, name: 'torontoraptors', isPinned: true, created_at: 1651959374, updated_at: -1 },
   { id: 7, name: 'disney', isPinned: true, created_at: 1652369074, updated_at: -1 },
+  { id: 7, name: 'AIS', isPinned: true, created_at: 1652369074, updated_at: -1 },
 ];
