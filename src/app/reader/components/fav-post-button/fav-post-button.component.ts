@@ -20,6 +20,10 @@ export class FavPostButtonComponent implements OnInit {
   _post: Post = { title: '(post not found)', replies: [], subreddit: '', id: '', permalink: '' } as Post;
 // #endregion
 
+// #region to avoid splash
+  initLock$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+// #endregion
+
   constructor(private favPostService: FavPostService) { }
 
   ngOnInit(): void {
@@ -30,7 +34,10 @@ export class FavPostButtonComponent implements OnInit {
   private postPermalink$: BehaviorSubject<string> = new BehaviorSubject('');
   isFavPost$: Observable<boolean> = this.postPermalink$.pipe(
     switchMap((permalink: string) => {
-      return this.favPostService.getIsFav(permalink).pipe(tap(_=>this.lock=false)) // locking
+      return this.favPostService.getIsFav(permalink).pipe(tap(_ => {
+        this.lock = false;
+        this.initLock$.next(false);
+      })) // locking
     })
   )
   favPostId$: Observable<number> = this.postPermalink$.pipe(

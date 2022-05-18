@@ -1,1 +1,8 @@
+<!--
 <button type="button" (click)="toggleFavPost()" [disabled]="lock" class="btn btn-ghost"><i *ngIf="{ value: isFavPost$ | async } as isFavPostContext" class="material-icons">{{ isFavPostContext.value ? 'bookmark' : 'bookmark_outline' }}</i></button>
+-->
+<ng-container *ngIf="{ value: initLock$ | async } as initLockContext">
+  <ng-container *ngIf="{ value: isFavPost$ | async } as isFavPostContext">
+    <button *ngIf="initLockContext.value === false" type="button" (click)="toggleFavPost()" [disabled]="lock" class="btn btn-ghost"><i class="material-icons">{{ isFavPostContext.value ? 'bookmark' : 'bookmark_outline' }}</i></button>
+  </ng-container>
+</ng-container>
