@@ -3,8 +3,9 @@
   <nav class="flex flex-wrap flex-row gap-4 mx-4 min-h-[24px]">
     <ng-container *ngIf="favSubreddits$ | async as favSubreddits">
       <a *ngFor="let favSubreddit of favSubreddits; trackBy: trackById; index as i"
-        [routerLink]="['r', favSubreddit.name]" routerLinkActive="link-accent" [routerLinkActiveOptions]="{exact: true}"
+        [routerLink]="['r', favSubreddit.name]" routerLinkActive="text-fountainblue" [routerLinkActiveOptions]="{exact: true}"
         class="link">r/{{ favSubreddit.name }}</a>
     </ng-container>
   </nav>
 </div>
+<!-- link-accent -->

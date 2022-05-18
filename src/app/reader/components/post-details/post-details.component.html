@@ -1,4 +1,4 @@
-<div class="bg-white border-2 border-gray-600 font-serif">
+<div class="bg-white border-2 border-suzumecha font-serif">
 <ng-container *ngIf="post && post.title !== '(post not found)'; else default">
   <div id="post" class="flex flex-row py-4">
     <div id="score" class="shrink-0 w-14 min-w-fit text-center"><p class="font-bold">{{ post?.score }}</p></div>
@@ -27,7 +27,7 @@
 
   </div>
 
-  <div id="replies" class="grid grid-cols-1 divide-y divide-blue-700">
+  <div id="replies" class="grid grid-cols-1 divide-y divide-blue-700 divide-none">
     <div class="mx-4 my-4">Replies ({{ post.replies.length }})</div>
     <ng-container *ngFor="let reply of post.replies | paginate: { itemsPerPage: 10, currentPage: page, totalItems: post.replies.length }; index as i; trackBy: trackById">
       <app-reply-row [reply]="reply" [isOP]="reply.author === post.author"></app-reply-row>

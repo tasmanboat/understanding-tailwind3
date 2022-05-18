@@ -3,7 +3,7 @@
     <input type="text" id="input-reddit-name" name="input-reddit-name" #inputRedditName class="input input-sm ml-2 flex-auto" />
     <button type="submit" (click)="onSearch(inputRedditName.value)" class="btn btn-ghost">GO</button>
   </form>
-  <div class="grid grid-cols-1 divide-y divide-yellow-500">
+  <div class="grid grid-cols-1 divide-y divide-suzumecha-extra-light">
     <div class="flex flex-row bg-slate-200">
       <h4 class="font-serif text-lg font-bold flex-auto self-center ml-4">{{ subreddit?.name ?? 'loading ...' }}</h4>
       <button type="button" (click)="toggleFavSubreddit()" [disabled]="lock" class="btn btn-ghost"><i *ngIf="{ value: isFavSubreddit$ | async } as isFavSubredditContext" class="material-icons">{{ isFavSubredditContext.value ? 'favorite' : 'favorite_outline' }}</i></button>
