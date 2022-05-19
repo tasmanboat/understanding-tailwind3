@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap, map, first, switchMap } from 'rxjs/operators';
 import { Post } from 'src/app/reader/interfaces/post';
@@ -12,7 +12,7 @@ import { FavPostService } from '../../services/fav-post.service';
   templateUrl: './fav-post-button.component.html',
   styleUrls: ['./fav-post-button.component.scss']
 })
-export class FavPostButtonComponent implements OnInit {
+export class FavPostButtonComponent implements OnInit, OnChanges {
 // #region check whether a post is a fav post
   @Input()
   set post(post: Post) { this._post = post; this.postPermalink$.next(this._post.permalink) }
@@ -67,6 +67,22 @@ export class FavPostButtonComponent implements OnInit {
     }
   }
   lock: boolean = false;
+// #endregion
+
+// #region ngOnChanges
+  ngOnChanges(changes: SimpleChanges) {
+    for (const propName in changes) {
+      if (changes.hasOwnProperty(propName)) {
+        let change = changes[propName];
+        switch (propName) {
+          case 'post': {
+            console.log('post.title was: ', change.previousValue?.title);
+            console.log('post.title changed to: ', change.currentValue?.title);
+          }
+        }
+      }
+    }
+  }
 // #endregion
 
 }
