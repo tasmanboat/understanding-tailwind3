@@ -32,6 +32,18 @@ const routes: Routes = [
 
 // #region url matcher
 const subredditMatcher = (segments: UrlSegment[]): UrlMatchResult => {
+  /*
+  try to match the empty path
+  { matcher: subredditMatcher, component: SubredditComponent }, // with "segments.length === 0" as handle empty path
+  { path: '', component: SubredditComponent }, // also handle empty path
+  */
+  if (segments.length === 0) {
+    return {
+      consumed: segments,
+      posParams: {
+      }
+    }
+  }
   if (segments.length === 2 && segments[0].path === 'r') {
     return {
       consumed: segments,
@@ -77,30 +89,21 @@ const favPostsMatcher = (segments: UrlSegment[]): UrlMatchResult => {
       }
     }
   }
-  if (segments.length === 6 && segments[0].path === 'r' && segments[2].path === 'comments') {
-    return {
-      consumed: segments,
-      posParams: {
-        subreddit: segments[1],
-        postId: segments[3],
-        postTitle: segments[4],
-      }
-    }
-  }
   return <UrlMatchResult>(null as any);
 }
 // #endregion
 
 // #region implementation of routing
 const routes: Routes = [
-  { path: '', component: PostDetailsComponent, outlet: 'content' },
-  { path: '', component: SubredditComponent },
   // { path: 'r/:subreddit/comments/:postId/:postTitle', component: SubredditComponent },
   // { path: 'r/:subreddit', component: SubredditComponent },
-  // { path: 'r/:subreddit', component: SubredditComponent },
-  { matcher: favPostsMatcher, component: FavPostsComponent },
   { matcher: subredditMatcher, component: SubredditComponent },
-  { path: 'fav/posts', component: FavPostsComponent },
+  { path: '', component: SubredditComponent },
+  { path: '', component: PostDetailsComponent, outlet: 'content' },
+
+  { matcher: favPostsMatcher, component: FavPostsComponent },
+  // { path: 'fav/posts', component: FavPostsComponent },
+
   { path: 'fav/subreddits', component: FavSubredditsComponent },
 
   // { path: 'r/:subreddit/comments/:postId/:postTitle', component: PostDetailsComponent, outlet: 'content' },
