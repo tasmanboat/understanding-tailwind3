@@ -48,4 +48,13 @@ export class FavSubredditsComponent implements OnInit {
   }
 // #endregion
 
+// #region update homepage subreddit
+  updateHomeSubreddit(e: any) {
+    console.log(e.target.value);
+    this.homeSubreddit = e.target.value;
+    localStorage.setItem('reader-home-subreddit', e.target.value);
+  }
+  homeSubreddit: string = localStorage.getItem('reader-home-subreddit')!;
+// #endregion
+
 }

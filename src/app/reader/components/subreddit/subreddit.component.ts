@@ -58,6 +58,7 @@ export class SubredditComponent implements OnInit, OnDestroy {
 // read route params, call (subredditApiService.getSubreddit) and find the correct subreddit name + content
 // get subreddit name; get subreddit content (subreddit name and latest posts)
   ngOnInit(): void {
+    const HOME_SUBREDDIT = localStorage.getItem('reader-home-subreddit');
     this.sub = this.route.paramMap.subscribe(params => {
       const pdSubreddit = params.get('subreddit') ?? HOME_SUBREDDIT;
       // this.subreddit = this.subredditApiService.getSubreddit(pdSubreddit).subscribe(_ => this.subreddit = _; this.subredditName$.next(this.subreddit.name); 额外路由修饰; )
@@ -115,5 +116,3 @@ export class SubredditComponent implements OnInit, OnDestroy {
   sub?: Subscription;
 
 }
-
-const HOME_SUBREDDIT = 'COD';

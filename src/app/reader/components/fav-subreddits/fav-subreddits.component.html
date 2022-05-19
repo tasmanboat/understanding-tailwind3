@@ -1,6 +1,14 @@
 <div *ngIf="favSubreddits$ | async as favSubreddits" class="min-h-full bg-suzumecha-extra-light flex flex-row justify-center">
   <div>
-    <h4 class="text-2xl my-4">fav subreddits</h4>
+    <h4 class="font-serif text-2xl my-4">Homepage subreddit</h4>
+    <div>
+      <select class="select select-ghost w-26 max-w-xs"
+      (change)="updateHomeSubreddit($event)">
+        <option disabled selected>{{ homeSubreddit }}</option>
+        <option *ngFor="let favSubreddit of favSubreddits" [value]="favSubreddit.name">{{ favSubreddit.name }}</option>
+      </select>
+    </div>
+    <h4 class="font-serif text-2xl my-4">Favourite subreddits</h4>
     <table class="table table-fixed">
       <!-- head -->
       <thead>

@@ -17,8 +17,16 @@ export class HeaderComponent implements OnInit {
   }
 
 // #region records
+// also set reader-home-subreddit, as the homepage subreddit
   favSubreddits$: Observable<FavSubreddit[]> = this.service.getRecords().pipe(
-    map((favSubreddits: FavSubreddit[]) => favSubreddits.filter(r => r.isPinned))
+    map((favSubreddits: FavSubreddit[]) => favSubreddits.filter(r => r.isPinned)),
+    tap((records: FavSubreddit[]) => {
+      const hs = localStorage.getItem('reader-home-subreddit');
+      if (!hs) {
+        const id = Math.min(...records.map(record => record.id));
+        localStorage.setItem('reader-home-subreddit', records.find(record => record.id === id)?.name!);
+      }
+    })
   )
 // #endregion
 
