@@ -63,7 +63,7 @@ export class FavPostsComponent implements OnInit {
       )
     })
   );
-  title = '';
+  title = 'loading ...';
 // #endregion
 
 // #region delete a record
