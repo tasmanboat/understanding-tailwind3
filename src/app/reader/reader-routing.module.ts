@@ -8,6 +8,8 @@ import { FavSubredditsComponent } from './components/fav-subreddits/fav-subreddi
 import { PostDetailsComponent } from './components/post-details/post-details.component';
 import { SubredditComponent } from './components/subreddit/subreddit.component';
 
+import { FavPostsResolver } from 'src/app/reader/resolvers/fav-posts.resolver';
+
 // #region intention of routing
 /*
 const routes: Routes = [
@@ -101,8 +103,9 @@ const routes: Routes = [
   { path: '', component: SubredditComponent },
   { path: '', component: PostDetailsComponent, outlet: 'content' },
 
-  { matcher: favPostsMatcher, component: FavPostsComponent },
   // { path: 'fav/posts', component: FavPostsComponent },
+  // { matcher: favPostsMatcher, component: FavPostsComponent },
+  { matcher: favPostsMatcher, component: FavPostsComponent, resolve: { favPosts: FavPostsResolver } },
 
   { path: 'fav/subreddits', component: FavSubredditsComponent },
 

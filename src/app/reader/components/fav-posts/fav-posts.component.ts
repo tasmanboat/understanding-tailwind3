@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { tap, map, switchMap, first, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { tap, map, switchMap, first, debounceTime, distinctUntilChanged, startWith } from 'rxjs/operators';
 import { FavPost } from '../../interfaces/fav-post';
 import { FavPostService } from '../../services/fav-post.service';
 
@@ -21,8 +21,58 @@ export class FavPostsComponent implements OnInit {
     private service: FavPostService,
   ) { }
 
+  // resolver data
   ngOnInit(): void {
+    this.route.data.pipe(
+      map(data => data['favPosts'] as FavPost[])
+    ).subscribe((records: FavPost[]) => {
+
+      // console.log(records.length);
+      this.title = `bookmarks (${records.length})`
+      this.initializedFavPosts = records;
+
+// #region records
+// records are updated with searchTerms$, and started with resolver data
+
+      this.favPosts$ = this.searchTerms$.pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        switchMap((term: string) => {
+          return this.service.getRecords().pipe(
+            map((records: FavPost[]) => {
+              if (term?.trim()) {
+                let arrTerm = term.match(/\w+/g)?.map(word => word.toLowerCase());
+                return records.filter(record => {
+                  // for every record title, check if the title contains substring (every item in arrTerm acts the substring)
+                  let title = record.title.toLowerCase();
+                  let containsAll = arrTerm?.every(i => title.includes(i));
+                  // return containsAll;
+                  let subreddit = record.subreddit.toLowerCase();
+                  let matchesSubreddit = arrTerm?.some(i => subreddit.includes(i));
+                  return containsAll || matchesSubreddit;
+                })
+              } else {
+                return records;
+              }
+            }),
+            tap((records: FavPost[]) => {
+              if (term?.trim()) {
+                this.title = `search results (${records.length})`
+              } else {
+                this.title = `bookmarks (${records.length})`
+              }
+            })
+          )
+        }),
+        startWith(this.initializedFavPosts),
+      );
+// #endregion
+
+    })
   }
+  initializedFavPosts?: FavPost[];
+  favPosts$?: Observable<FavPost[]>;
+  title = 'loading ...';
 
 // #region search
   search(term: string) {
@@ -32,6 +82,8 @@ export class FavPostsComponent implements OnInit {
 // #endregion
 
 // #region records
+// records are updated with searchTerms$
+/*
   favPosts$: Observable<FavPost[]> = this.searchTerms$.pipe(
     debounceTime(500),
     distinctUntilChanged(),
@@ -64,6 +116,7 @@ export class FavPostsComponent implements OnInit {
     })
   );
   title = 'loading ...';
+*/
 // #endregion
 
 // #region delete a record

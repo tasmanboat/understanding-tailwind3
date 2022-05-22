@@ -23,3 +23,31 @@
     </div>
   </ng-container>
 </div>
+
+<!--
+<ng-container *ngIf="inputPostTitle.value && (favPosts$ | async) as favPosts; else initializedFavPosts">
+<ng-template #initializedFavPosts>
+  <ng-container *ngTemplateOutlet="initializedFavPostsTemplate"></ng-container>
+</ng-template>
+-->
+
+<!-- <ng-container *ngTemplateOutlet="initializedFavPostsTemplate"></ng-container> -->
+<ng-template #initializedFavPostsTemplate>
+
+  <div class="grid grid-cols-1 divide-y divide-yellow-500">
+    <div></div>
+    <ng-container *ngFor="let post of initializedFavPosts; trackBy: trackById; index as i">
+
+      <div class="bg-slate-100 px-4 py-4">
+        <div id="content">
+          <h4 class="font-serif text-lg">
+            <a [routerLink]="[post.permalink, '.']" [queryParams]="{ 'fromFav': 'post' }" class="link">{{ post.title | decodeHTMLEntities }}</a>
+          </h4>
+          <div><div class="badge">{{ post.subreddit }}</div></div>
+        </div>
+      </div>
+
+    </ng-container>
+  </div>
+
+</ng-template>
