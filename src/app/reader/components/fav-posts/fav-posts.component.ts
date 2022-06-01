@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap, map, switchMap, first, debounceTime, distinctUntilChanged, startWith } from 'rxjs/operators';
 import { FavPost } from '../../interfaces/fav-post';
@@ -10,7 +11,8 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-fav-posts',
   templateUrl: './fav-posts.component.html',
-  styleUrls: ['./fav-posts.component.scss']
+  styleUrls: ['./fav-posts.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FavPostsComponent implements OnInit {
 
@@ -136,6 +138,13 @@ export class FavPostsComponent implements OnInit {
 // #region load a fav post
   handleClick(post: FavPost) {
     this.location.replaceState(`${post.permalink}?rpn=1`)
+  }
+// #endregion
+
+// #region runChangeDetection
+  get runChangeDetection() {
+    console.log('(FavPostsComponent) Checking the view');
+    return false;
   }
 // #endregion
 

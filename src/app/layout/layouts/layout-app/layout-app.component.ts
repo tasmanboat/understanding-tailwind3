@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { tap, filter } from 'rxjs/operators';
 
@@ -8,7 +9,8 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-layout-app',
   templateUrl: './layout-app.component.html',
-  styleUrls: ['./layout-app.component.scss']
+  styleUrls: ['./layout-app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class LayoutAppComponent implements OnInit, OnDestroy {
 
@@ -36,5 +38,12 @@ export class LayoutAppComponent implements OnInit, OnDestroy {
     this.sub?.unsubscribe();
   }
   sub?: Subscription;
+
+// #region runChangeDetection
+  get runChangeDetection() {
+    console.log('(LayoutAppComponent) Checking the view');
+    return false;
+  }
+// #endregion
 
 }
