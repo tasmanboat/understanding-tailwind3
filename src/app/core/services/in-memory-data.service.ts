@@ -27,6 +27,10 @@ DELETE /api/fav-subreddits/1
     const data2 = await this.pss.getItemAsync('fav-posts') as string | null;
     const favSubreddits = data1 ? JSON.parse(data1) : FAV_SUBREDDITS;
     const favPosts = data2 ? JSON.parse(data2) : FAV_POSTS;
+    // for exportability
+    this.pss.setItemAsync('fav-posts', JSON.stringify(favPosts)); // not block
+    this.pss.setItemAsync('fav-subreddits', JSON.stringify(favSubreddits)); // not block
+    //
     return { 'fav-subreddits': favSubreddits, 'fav-posts': favPosts };
   }
   // createDb() {
