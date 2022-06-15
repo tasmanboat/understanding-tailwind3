@@ -1,31 +1,33 @@
-<div *ngIf="favSubreddits$ | async as favSubreddits" class="wrapper min-h-full min-w-full py-4 px-[320px] grid grid-cols-1 gap-4">
-  <h4 class="font-serif text-2xl">Homepage subreddit</h4>
-  <div>
-    <select class="select select-ghost w-26 max-w-xs"
-    (change)="updateHomeSubreddit($event)">
-      <option disabled selected>{{ homeSubreddit }}</option>
-      <option *ngFor="let favSubreddit of favSubreddits" [value]="favSubreddit.name">{{ favSubreddit.name }}</option>
-    </select>
+<div *ngIf="favSubreddits$ | async as favSubreddits" class="wrapper min-h-full min-w-full py-4 px-[320px]">
+  <div class="grid grid-cols-1 gap-4">
+    <h4 class="font-serif text-2xl">Homepage subreddit</h4>
+    <div>
+      <select class="select select-ghost w-26 max-w-xs"
+      (change)="updateHomeSubreddit($event)">
+        <option disabled selected>{{ homeSubreddit }}</option>
+        <option *ngFor="let favSubreddit of favSubreddits" [value]="favSubreddit.name">{{ favSubreddit.name }}</option>
+      </select>
+    </div>
+    <h4 class="font-serif text-2xl">Favourite subreddits</h4>
+    <table class="table table-fixed">
+      <!-- head -->
+      <thead>
+        <tr>
+          <th class="w-8 text-center">#</th>
+          <th class="w-60">name</th>
+          <th class="w-20">isPinned</th>
+          <th class="w-8"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- rows -->
+        <tr *ngFor="let favSubreddit of favSubreddits; index as i" class="hover">
+          <td class="text-center">{{ favSubreddit.id }}</td>
+          <td><a [routerLink]="['../..', 'r', favSubreddit.name]" class="link">r/{{ favSubreddit.name }}</a></td>
+          <td><input type="checkbox" [checked]="favSubreddit.isPinned" (change)="onToggle($event, favSubreddit)" class="toggle toggle-sm" /></td>
+          <td><button (click)="onDelete($event, favSubreddit)" class="">✕</button></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <h4 class="font-serif text-2xl">Favourite subreddits</h4>
-  <table class="table table-fixed">
-    <!-- head -->
-    <thead>
-      <tr>
-        <th class="w-8 text-center">#</th>
-        <th class="w-60">name</th>
-        <th class="w-20">isPinned</th>
-        <th class="w-8"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- rows -->
-      <tr *ngFor="let favSubreddit of favSubreddits; index as i" class="hover">
-        <td class="text-center">{{ favSubreddit.id }}</td>
-        <td><a [routerLink]="['../..', 'r', favSubreddit.name]" class="link">r/{{ favSubreddit.name }}</a></td>
-        <td><input type="checkbox" [checked]="favSubreddit.isPinned" (change)="onToggle($event, favSubreddit)" class="toggle toggle-sm" /></td>
-        <td><button (click)="onDelete($event, favSubreddit)" class="">✕</button></td>
-      </tr>
-    </tbody>
-  </table>
 </div>
