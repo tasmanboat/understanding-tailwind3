@@ -2,7 +2,7 @@
   <div id="score" class="shrink-0 w-14 min-w-fit text-center"><p class="font-serif font-bold">{{ post.score }}</p></div>
   <div id="content">
     <h4 class="font-serif text-lg">
-      <a [routerLink]="[post.permalink]" class="link">{{ post.title | decodeHTMLEntities }}</a>
+      <p class="mr-2"><a [routerLink]="[post.permalink]" class="link">{{ post.title | decodeHTMLEntities }}</a></p>
       <!-- <a [routerLink]="[post.permalink, '.']" class="link">{{ post.title | decodeHTMLEntities }}</a> -->
     </h4>
     <p class="font-serif text-sm">{{ post.created+'000' | dateAgo }}</p>
