@@ -21,12 +21,10 @@ export class DropdownComponent implements OnInit {
   // #endregion
 
 // #region clear data confirmation
-// not work yet #todo
   onClearData() {
-    if (confirm('Are you sure to clear data?')) {
+    if (confirm('Are you sure to clear data?\n(all of fav posts and fav subreddits will be lost, as reset to the default)')) {
       this.pss.removeItemAsync('fav-subreddits');
-      this.pss.removeItemAsync('fav-posts');
-      window.location.reload();
+      this.pss.removeItemAsync('fav-posts').then(() => window.location.reload());
     }
   }
 // #endregion
