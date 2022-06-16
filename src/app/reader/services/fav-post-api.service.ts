@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 import { tap, map, catchError, delay } from 'rxjs/operators';
 import { FavPost } from "src/app/reader/interfaces/fav-post";
 import { PersistentStorageService } from 'src/app/core/services/persistent-storage.service';
@@ -14,7 +14,11 @@ export class FavPostApiService {
 
   getRecords(): Observable<FavPost[]> {
     return this.http.get<FavPost[]>(this.recordsUrl).pipe(
-      catchError(error => { throw new Error(error) })
+      catchError(error => { // (error: HttpErrorResponse)
+        // throw new Error(error);
+        console.error(error);
+        return of([] as FavPost[]);
+      })
     )
   }
 
